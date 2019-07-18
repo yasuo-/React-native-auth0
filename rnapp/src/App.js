@@ -8,6 +8,8 @@ import {
     View
 } from 'react-native';
 import Auth0 from 'react-native-auth0';
+import { mapping, light as lightTheme } from '@eva-design/eva';
+import { ApplicationProvider } from 'react-native-ui-kitten';
 
 var credentials = require('./auth0-credentials');
 const auth0 = new Auth0(credentials);
@@ -53,14 +55,22 @@ export default class App extends Component {
 
     render() {
         let loggedIn = this.state.accessToken === null ? false : true;
-        return ( 
-        <View style = { styles.container }>
-            <Text style = { styles.header }> Auth0Sample - Login </Text>    
-            <Text>
-                You are { loggedIn ? '' : 'not ' } logged in . </Text>    
-                <Button onPress = { loggedIn ? this._onLogout : this._onLogin }
-                title = { loggedIn ? 'Log Out' : 'Log In' }/>   
-        </View >
+        return (
+          <ApplicationProvider
+            mapping={mapping}
+            theme={lightTheme}>
+
+              <Layout style={styles.container}>
+                <View style = { styles.container }>
+                    <Text style = { styles.header }> Auth0Sample - Login </Text>    
+                    <Text>
+                        You are { loggedIn ? '' : 'not ' } logged in . </Text>    
+                        <Button onPress = { loggedIn ? this._onLogout : this._onLogin }
+                        title = { loggedIn ? 'Log Out' : 'Log In' }/>   
+                </View >
+              </Layout>
+            </ApplicationProvider>
+        
         );
     }
 }
@@ -69,8 +79,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#F5FCFF'
+        alignItems: 'center'
     },
     header: {
         fontSize: 20,
