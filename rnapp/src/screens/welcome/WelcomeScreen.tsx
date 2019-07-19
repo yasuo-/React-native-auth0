@@ -1,18 +1,51 @@
 import * as React from 'react';
-import { StyleSheet } from 'react-native';
-import { Alert, Button, Layout, Text } from 'react-native-ui-kitten';
+import { StyleSheet, Alert } from 'react-native';
+import { Button, Layout, Text } from 'react-native-ui-kitten';
 import Auth0 from 'react-native-auth0';
 
-let credentials = require('./auth0-credentials');
+let trans: any = require('../../translations/');
+let credentials: any = require('../../credentials/auth0-credentials');
 const auth0 = new Auth0(credentials);
 
-export default class HomeScreen extends React.Component {
+export default class WelcomeScreen extends React.Component {
+  state: { accessToken: any; };
   constructor(props) {
     super(props);
     this.state = { accessToken: null };
   }
 
+  /**
+   * _onLogin
+   * Auth0 => GestScreen
+   */
   _onLogin = () => {
+    auth0.webAuth
+      .authorize({
+        scope: 'openid profile',
+        audience: 'https://' + credentials.domain + '/userinfo'
+      })
+      .then(credentials => {
+        Alert.alert(
+          'Success',
+          'AccessToken: ' + credentials.accessToken,
+          [
+            {
+              text: 'OK',
+              onPress: () => console.log('OK Pressed')
+            }
+          ],
+          { cancelable: false }
+        );
+        this.setState({ accessToken: credentials.accessToken });
+      })
+      .catch(error => console.log(error));
+  }
+
+  /**
+   * _onLoginToHost
+   * Auth0 => HostScreen
+   */
+  _onLoginToHost = () => {
     auth0.webAuth
       .authorize({
         scope: 'openid profile',
@@ -51,16 +84,17 @@ export default class HomeScreen extends React.Component {
     let loggedIn = this.state.accessToken === null ? false : true;
     return (
       <Layout style={styles.container}>
-        <Text style={styles.text} category="h4">
-          Welcome to UI Kitten
-        </Text>
-        <Button>BUTTON</Button>
-        <Text style={styles.header}> Auth0Sample - Login </Text>
+        <Text style={styles.header}> Welcome to {trans.appName} - Login </Text>
         <Text>You are {loggedIn ? '' : 'not '} logged in . </Text>
         <Button
           onPress={loggedIn ? this._onLogout : this._onLogin}
           title={loggedIn ? 'Log Out' : 'Log In'}
-        />
+        >ゲスト</Button>
+        <Text>or</Text>
+        <Button
+          onPress={loggedIn ? this._onLogout : this._onLoginToHost}
+          title={loggedIn ? 'Log Out' : 'Log In'}
+        >ホスト</Button>
       </Layout>
     );
   }
