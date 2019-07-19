@@ -5,9 +5,13 @@ import Auth0 from 'react-native-auth0';
 
 let trans: any = require('../../translations/');
 let credentials: any = require('../../credentials/auth0-credentials');
-const auth0 = new Auth0(credentials);
+const auth0: Auth0 = new Auth0(credentials);
 
-export default class WelcomeScreen extends React.Component {
+interface Props {}
+interface State {
+  accessToken: any,
+}
+export default class WelcomeScreen extends React.Component<Props, State> {
   state: { accessToken: any; };
   constructor(props) {
     super(props);
@@ -18,7 +22,7 @@ export default class WelcomeScreen extends React.Component {
    * _onLogin
    * Auth0 => GestScreen
    */
-  _onLogin = () => {
+  _onLogin = (): void => {
     auth0.webAuth
       .authorize({
         scope: 'openid profile',
@@ -45,7 +49,7 @@ export default class WelcomeScreen extends React.Component {
    * _onLoginToHost
    * Auth0 => HostScreen
    */
-  _onLoginToHost = () => {
+  _onLoginToHost = (): void => {
     auth0.webAuth
       .authorize({
         scope: 'openid profile',
@@ -68,7 +72,11 @@ export default class WelcomeScreen extends React.Component {
       .catch(error => console.log(error));
   };
 
-  _onLogout = () => {
+  /**
+   * _onLogout
+   * Auth0 logout
+   */
+  _onLogout = (): void => {
     auth0.webAuth
       .clearSession({})
       .then(success => {
@@ -81,10 +89,10 @@ export default class WelcomeScreen extends React.Component {
   };
 
   render() {
-    let loggedIn = this.state.accessToken === null ? false : true;
+    let loggedIn: boolean = this.state.accessToken === null ? false : true;
     return (
       <Layout style={styles.container}>
-        <Text style={styles.header}> Welcome to {trans.appName} - Login </Text>
+        <Text style={styles.text} category='h4'> Welcome to {trans.appName} - Login </Text>
         <Text>You are {loggedIn ? '' : 'not '} logged in . </Text>
         <Button
           onPress={loggedIn ? this._onLogout : this._onLogin}
@@ -100,7 +108,7 @@ export default class WelcomeScreen extends React.Component {
   }
 }
 
-const styles = StyleSheet.create({
+const styles: any = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center'
