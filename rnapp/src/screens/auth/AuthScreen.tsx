@@ -11,7 +11,7 @@ interface Props {}
 interface State {
   accessToken: any,
 }
-export default class WelcomeScreen extends React.Component<Props, State> {
+export default class AuthScreen extends React.Component<Props, State> {
   state: { accessToken: any; };
   constructor(props) {
     super(props);
@@ -92,26 +92,17 @@ export default class WelcomeScreen extends React.Component<Props, State> {
     let loggedIn: boolean = this.state.accessToken === null ? false : true;
     return (
       <Layout style={styles.container}>
-        <Text style={styles.text} category='h4'> Welcome to {trans.appName} - Login </Text>
+        <Text style={styles.text} category='h4'>Auth </Text>
         <Text>You are {loggedIn ? '' : 'not '} logged in . </Text>
         <Button
           onPress={loggedIn ? this._onLogout : this._onLogin}
           title={loggedIn ? 'Log Out' : 'Log In'}
-        >ゲストLogin</Button>
-        <Button
-          onPress={() => this.props.navigation.navigate('LoggedInToGest')}
-          title={'gest'}
-        >ゲストページ</Button>
-        
+        >ゲスト</Button>
         <Text>or</Text>
         <Button
           onPress={loggedIn ? this._onLogout : this._onLoginToHost}
           title={loggedIn ? 'Log Out' : 'Log In'}
-        >ホストLogin</Button>
-         <Button
-          onPress={() => this.props.navigation.navigate('LoggedInToHost')}
-          title={'host'}
-        >ホストページ</Button>
+        >ホスト</Button>
       </Layout>
     );
   }
