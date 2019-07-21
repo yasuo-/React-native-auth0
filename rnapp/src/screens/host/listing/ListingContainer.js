@@ -6,8 +6,11 @@ import ListingScreen from './ListingScreen';
 export default compose(
   connect(
     state => ({
-      listings: state.listing.listings,
+      listing: state.listing.listing,
     }),
-    dispatch => ({}),
+    dispatch => ({
+      doPublish: listing_id => dispatch(AuthStateActions.doPublish(listing_id)),
+      doPrivate: listing_id => dispatch(AuthStateActions.doPrivate(listing_id)),
+    }),
   ),
 )(ListingScreen);

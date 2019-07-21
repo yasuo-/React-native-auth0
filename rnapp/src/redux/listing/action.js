@@ -4,11 +4,11 @@ export const ADD_LISTING = 'ListingsState/ADD';
 export const UPDATE_LISTING = 'AddState/UPDATE';
 export const DELETE_LISTING = 'ListingsState/DELETE';
 export const IS_FETCHING = 'ListingState/IS_FETCHING';
+export const IS_UPDATING = 'ListingState/IS_UPDATING';
 export const GET_LISTING_SUCCESS = 'ListingState/GET_LISTING_SUCCESS';
 export const GET_LISTING_FAIL = 'ListingState/GET_LISTING_FAIL';
 
 import {AsyncStorage} from 'react-native';
-import ListingsStateReducer from '.';
 
 // Action creators
 // Add Listing - CREATE (C)
@@ -35,6 +35,40 @@ export const updateListing = () => ({
   type: UPDATE_LISTING,
   payload: listings,
 });
+
+/**
+ * リスティング公開
+ * doPublish
+ */
+export const doPublish = listing_id => {
+  return dispatch => {
+    // console.log(`Bearer ${token}`);
+
+    dispatch({type: IS_UPDATING});
+    listing = {};
+    return dispatch({
+      type: UPDATE_LISTING,
+      payload: listing,
+    });
+  };
+};
+
+/**
+ * リスティング非公開
+ * doPrivate
+ */
+export const doPrivate = listing_id => {
+  return dispatch => {
+    // console.log(`Bearer ${token}`);
+
+    dispatch({type: IS_UPDATING});
+    listing = {};
+    return dispatch({
+      type: UPDATE_LISTING,
+      payload: listing,
+    });
+  };
+};
 
 // Delete Listing - DELETE (D)
 export const deleteListing = id => ({

@@ -4,7 +4,7 @@ import {Image, View, StyleSheet, Text} from 'react-native';
 import {createStackNavigator, createBottomTabNavigator} from 'react-navigation';
 import Icon from 'react-native-vector-icons/AntDesign';
 
-import {Home, Auth, HostListings} from './Stacks';
+import {Home, Auth, HostListings, HostListing} from './Stacks';
 
 const HomeStack = createStackNavigator(
   {
@@ -15,7 +15,7 @@ const HomeStack = createStackNavigator(
     initialRouteName: 'Home',
     navigationOptions: {
       tabBarLabel: 'ホーム',
-      tabBarIcon: <Icon name="dashboard" />,
+      tabBarIcon: <Icon name="dashboard" size={24} />,
     },
   },
 );
@@ -28,7 +28,7 @@ const AuthStack = createStackNavigator(
     initialRouteName: 'Auth',
     navigationOptions: {
       tabBarLabel: 'マイページ',
-      tabBarIcon: <Icon name="user" />,
+      tabBarIcon: <Icon name="user" size={24} />,
     },
   },
 );
@@ -36,12 +36,13 @@ const AuthStack = createStackNavigator(
 const HostListingStack = createStackNavigator(
   {
     HostListings,
+    HostListing,
   },
   {
     initialRouteName: 'HostListings',
     navigationOptions: {
       tabBarLabel: '店舗',
-      tabBarIcon: <Icon name="home" />,
+      tabBarIcon: <Icon name="home" size={24} />,
     },
   },
 );

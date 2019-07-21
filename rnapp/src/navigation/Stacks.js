@@ -5,7 +5,8 @@ import HomeScreen from '../screens/home/HomeScreen';
 import AuthScreen from '../screens/auth/AuthScreen';
 
 // host
-import HostListingsScreen from '../screens/host/listing/ListingScreen';
+import HostListingsScreen from '../screens/host/listings/ListingsScreen';
+import HostListingScreen from '../screens/host/listing/ListingScreen';
 
 export const Welcome = {
   screen: WelcomeScreen,
@@ -38,6 +39,15 @@ export const HostListings = {
   navigationOptions: ({navigation}) => {
     return {
       title: 'リスティング',
+    };
+  },
+};
+
+export const HostListing = {
+  screen: HostListingScreen,
+  navigationOptions: ({navigation}) => {
+    return {
+      title: 'プレビュー',
     };
   },
 };
